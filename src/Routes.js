@@ -5,10 +5,12 @@ import Signup from "./user/Signup";
 import Signin from "./user/Signin";
 import Home from "./core/Home";
 // import Menu from "./core/Menu"
+import {createMemoryHistory} from 'history';
 
 const Routes6 = () => {
+  const history = createMemoryHistory();
   return (
-    <BrowserRouter>
+    <BrowserRouter location={history.location}>
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/signin" exact element={<Signin />} />
