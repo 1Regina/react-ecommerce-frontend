@@ -36,4 +36,11 @@ export const signin = async (user) => {
   }
 };
 
-
+export const authenticate = (data, next) => {
+  // local storage is a property of the window object.
+  if (typeof window !== "undefined") {
+    // save with key of 'jwt'
+    localStorage.setItem("jwt", JSON.stringify(data));
+    next();
+  }
+};

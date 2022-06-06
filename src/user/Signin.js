@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../core/Layout";
-import {signin} from "../auth/index";
+import { signin, authenticate } from "../auth/index";
 
 const Signin = () => {
   // inefficient to do useState per field
@@ -9,8 +9,8 @@ const Signin = () => {
   // const [email, setEmail] = useState('')
   // const [password, setPassword] = useState('')
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    email: "ddd@gmail.com",
+    password: "dddddd6",
     error: "", // when create new user and there is error, this field will populate
     loading: false,
     redirectToReferrer: false, // will become true after successful signin
@@ -33,14 +33,16 @@ const Signin = () => {
         if (data.error) {
           setValues({ ...values, error: data.error, loading: false });
         } else {
-          setValues({
-            ...values,
-            // these values become irrelevant since we are redirecting
-            // email: "",
-            // password: "",
-            // error: "",
-            // loading: false,
-            redirectToReferrer: true,
+          authenticate(data, () => {
+            setValues({
+              ...values,
+              // these values become irrelevant since we are redirecting
+              // email: "",
+              // password: "",
+              // error: "",
+              // loading: false,
+              redirectToReferrer: true,
+            });
           });
         }
       });
@@ -97,9 +99,9 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Navigate to="/"/>
+      return <Navigate to="/" />;
     }
-  }    
+  };
   return (
     <Layout
       title="Signin"
