@@ -36,6 +36,7 @@ export const signin = async (user) => {
   }
 };
 
+// next as the call back
 export const authenticate = (data, next) => {
   // local storage is a property of the window object.
   if (typeof window !== "undefined") {
@@ -44,3 +45,33 @@ export const authenticate = (data, next) => {
     next();
   }
 };
+
+// next as the call back
+export const signout = async (next) => {
+  // local storage is a property of the window object.
+  if (typeof window !== "undefined") {
+    // remove key of 'jwt' which was created via authenticate via signin
+    localStorage.removeItem("jwt");
+    next();
+    // make request to backend to log out the user
+    try {
+      const response = await fetch(`${API}/signout`, {
+        method: "GET",
+      });
+      console.log("signout", response);
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+};
+
+export const isAuthenticated = () => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  if (localStorage.getItem('jwt')) {
+    return JSON.parse(localStorage.getItem('jwt'))
+  } else {
+    return false
+  }
+}

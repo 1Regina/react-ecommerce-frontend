@@ -9,8 +9,8 @@ const Signin = () => {
   // const [email, setEmail] = useState('')
   // const [password, setPassword] = useState('')
   const [values, setValues] = useState({
-    email: "ddd@gmail.com",
-    password: "dddddd6",
+    email: "ddd@gmail.com", //""
+    password: "dddddd6", //""
     error: "", // when create new user and there is error, this field will populate
     loading: false,
     redirectToReferrer: false, // will become true after successful signin
