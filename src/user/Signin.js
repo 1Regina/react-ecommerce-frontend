@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Layout from "../core/Layout";
-import { signin, authenticate } from "../auth/index";
+import { signin, authenticate, isAuthenticated } from "../auth/index";
 
 const Signin = () => {
   // inefficient to do useState per field
@@ -18,6 +18,7 @@ const Signin = () => {
 
   // grab fields input from state
   const { email, password, loading, error, redirectToReferrer } = values;
+  const {user} = isAuthenticated()
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value }); // this name is dynamic n could refer to email / password too
@@ -99,7 +100,12 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectToReferrer) {
-      return <Navigate to="/" />;
+      // return <Navigate to="/" />;
+      if (user && user.role === 1) {
+        return <Navigate to="/admin/dashboard" />;
+      } else {
+        return <Navigate to="/user/dashboard" />;
+      }
     }
   };
   return (
