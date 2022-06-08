@@ -23,12 +23,13 @@ const Routes6 = () => {
         <Route
           path ="/user/dashboard"
           element = {
-            <PrivateRoute>
+            <PrivateRoute >
               <Dashboard />
             </PrivateRoute>
           }
         />
-
+        <Route path="/forbidden" element={<Forbidden />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
