@@ -7,10 +7,12 @@ import Home from "./core/Home";
 // import Menu from "./core/Menu"
 import { createMemoryHistory } from "history";
 import PrivateRoute from "./auth/PrivateRoute"; // only accessible for logined users
+import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
+import AdminDashboard from "./user/AdminDashboard";
 
-import NotFound from "./views/NotFound"
-import Forbidden from "./views/Forbidden"
+import NotFound from "./views/NotFound";
+import Forbidden from "./views/Forbidden";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -21,11 +23,20 @@ const Routes6 = () => {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path ="/user/dashboard"
-          element = {
-            <PrivateRoute >
+          path="/user/dashboard"
+          element={
+            <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
           }
         />
         <Route path="/forbidden" element={<Forbidden />} />

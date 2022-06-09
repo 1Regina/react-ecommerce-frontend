@@ -18,7 +18,7 @@ const Signin = () => {
 
   // grab fields input from state
   const { email, password, loading, error, redirectToReferrer } = values;
-  const {user} = isAuthenticated()
+  const { user } = isAuthenticated();
 
   const handleChange = (name) => (event) => {
     setValues({ ...values, error: false, [name]: event.target.value }); // this name is dynamic n could refer to email / password too
@@ -106,6 +106,9 @@ const Signin = () => {
       } else {
         return <Navigate to="/user/dashboard" />;
       }
+    }
+    if (isAuthenticated()) {
+      return <Navigate to="/" />;
     }
   };
   return (

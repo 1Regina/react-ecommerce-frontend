@@ -19,7 +19,7 @@ const Menu = () => {
           {/* <button onClick={() => navigate("/home")}>Home</button> */}
         </li>
 
-        <li className="nav-item nav-link">
+        {/* <li className="nav-item nav-link">
           <NavLink
             to="/user/dashboard"
             style={({ isActive }) => ({
@@ -28,7 +28,32 @@ const Menu = () => {
           >
             Dashboard
           </NavLink>
-        </li>
+        </li> */}
+        {isAuthenticated() && isAuthenticated().user.role === 0 && (
+          <li className="nav-item nav-link">
+            <NavLink
+              to="/user/dashboard"
+              style={({ isActive }) => ({
+                color: isActive ? "#ff9900" : "#ffffff",
+              })}
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        )}
+
+        {isAuthenticated() && isAuthenticated().user.role === 1 && (
+          <li className="nav-item nav-link">
+            <NavLink
+              to="/admin/dashboard"
+              style={({ isActive }) => ({
+                color: isActive ? "#ff9900" : "#ffffff",
+              })}
+            >
+              Dashboard
+            </NavLink>
+          </li>
+        )}
 
         {/* <li className="nav-item nav-link">
         <NavLink
