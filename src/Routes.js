@@ -10,6 +10,7 @@ import PrivateRoute from "./auth/PrivateRoute"; // only accessible for logined u
 import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
+import AddCategory from "./admin/AddCategory";
 
 import NotFound from "./views/NotFound";
 import Forbidden from "./views/Forbidden";
@@ -36,6 +37,14 @@ const Routes6 = () => {
           element={
             <AdminRoute>
               <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/create/category"
+          element={
+            <AdminRoute>
+              <AddCategory />
             </AdminRoute>
           }
         />
