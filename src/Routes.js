@@ -11,6 +11,7 @@ import AdminRoute from "./auth/AdminRoute";
 import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
 import AddCategory from "./admin/AddCategory";
+import AddProduct from "./admin/AddProduct";
 
 import NotFound from "./views/NotFound";
 import Forbidden from "./views/Forbidden";
@@ -45,6 +46,15 @@ const Routes6 = () => {
           element={
             <AdminRoute>
               <AddCategory />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/create/product"
+          element={
+            <AdminRoute>
+              <AddProduct />
             </AdminRoute>
           }
         />
