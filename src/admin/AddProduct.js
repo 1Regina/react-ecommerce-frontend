@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { createProduct } from "./apiAdmin";
+import { createProduct, getCategories } from "./apiAdmin";
 
 const AddProduct = () => {
   const [values, setValues] = useState({
@@ -37,9 +37,22 @@ const AddProduct = () => {
     formData,
   } = values;
 
+  // load categories and set form data
+  const init = () => {
+    getCategories().then((data) => {
+      if (data.error) {
+        setValues({ ...values, error: data.error });
+      } else {
+        setValues({ ...values, categories: data, formData: new FormData() });
+      }
+    });
+  };
+
   // replacement for lifecycle mtd in class component where each time something changes, useEffect kicks in
   useEffect(() => {
-    setValues({ ...values, formData: new FormData() });
+    // setValues({ ...values, formData: new FormData() });
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (name) => (event) => {
@@ -51,7 +64,6 @@ const AddProduct = () => {
   const clickSubmit = (event) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
-    console.log('ASDASDAS', formData)
 
     createProduct(user._id, token, formData).then((data) => {
       if (data.error) {
@@ -62,7 +74,7 @@ const AddProduct = () => {
           name: "",
           description: "",
           photo: "",
-          category:"",
+          category: "",
           price: "",
           quantity: "",
           loading: false,
@@ -105,7 +117,7 @@ const AddProduct = () => {
       </div>
 
       <div className="form-group">
-        <label className="text-muted">price</label>
+        <label className="text-muted">Price</label>
         <input
           onChange={handleChange("price")}
           type="number"
@@ -117,21 +129,29 @@ const AddProduct = () => {
       <div className="form-group">
         <label className="text-muted">Category</label>
         <select onChange={handleChange("category")} className="form-control">
-          <option value="62a33128e269d226cf323314">Python</option>
-          <option value="62a33128e269d226cf323314">PHP</option>
+          <option>Please select</option>
+          {categories &&
+            categories.map((cat, ind) => (
+              <option key={ind} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+
+          {/* {categories && categories.map((c) => <>{JSON.stringify(c)}</>)} */}
         </select>
       </div>
 
       <div className="form-group">
         <label className="text-muted">Shipping</label>
         <select onChange={handleChange("shipping")} className="form-control">
+          <option>Please select</option>
           <option value="0">No</option>
           <option value="1">Yes</option>
         </select>
       </div>
 
       <div className="form-group">
-        <label className="text-muted">quantity</label>
+        <label className="text-muted">Quantity</label>
         <input
           onChange={handleChange("quantity")}
           type="number"
@@ -143,6 +163,36 @@ const AddProduct = () => {
     </form>
   );
 
+  const showError = () => {
+    return (
+      <div
+        className="alert alert-danger"
+        style={{ display: error ? "" : "none" }}
+      >
+        {error}
+      </div>
+    );
+  };
+
+  const showSuccess = () => (
+    <div
+      className="alert alert-info"
+      style={{ display: createdProduct ? "" : "none" }}
+    >
+      <h2>{`${createdProduct}`} is created</h2>
+    </div>
+  );
+
+  const showLoading = () => {
+    return (
+      loading && (
+        <div className="alert alert-success">
+          <h2>Loading...</h2>
+        </div>
+      )
+    );
+  };
+
   return (
     <Layout
       title="Add a new Product"
@@ -150,7 +200,12 @@ const AddProduct = () => {
       className="container=fluid"
     >
       <div className="row">
-        <div className="col-md-8 offset-md-2">{newPostForm()}</div>
+        <div className="col-md-8 offset-md-2">
+          {showLoading()}
+          {showSuccess()}
+          {showError()}
+          {newPostForm()}
+        </div>
       </div>
     </Layout>
   );
