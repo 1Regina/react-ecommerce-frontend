@@ -7,7 +7,7 @@ export const createCategory = async (userId, token, category) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(category), // to convert object to json string for backend
     });
@@ -24,13 +24,33 @@ export const createProduct = async (userId, token, product) => {
       headers: {
         Accept: "application/json",
         // "Content-Type": "application/json", removing bcos sending a form data
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body:
-       product //remove bcos sending a form data ie product: JSON.stringify(product), // to convert object to json string for backend
+      body: product, //remove bcos sending a form data ie product: JSON.stringify(product), // to convert object to json string for backend
     });
     return await response.json();
   } catch (err) {
     console.log(err);
   }
+};
+
+// export const getCategories = async () => {
+//   try{ const response = fetch(`${API}/categories`, {
+//     method: "GET",
+//   })
+//     // .then((response) => {
+//     //   return response.json()
+//     return await response.json();
+//     } catch(err)
+//     {console.log(err)};
+// };
+
+export const getCategories = () => {
+    return fetch(`${API}/categories`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };
