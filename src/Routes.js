@@ -12,9 +12,9 @@ import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
 import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
-
 import NotFound from "./views/NotFound";
 import Forbidden from "./views/Forbidden";
+import Shop from "./core/Shop";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -22,6 +22,7 @@ const Routes6 = () => {
     <BrowserRouter location={history.location}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route

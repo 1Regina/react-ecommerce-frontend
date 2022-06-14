@@ -19,6 +19,17 @@ const Menu = () => {
           {/* <button onClick={() => navigate("/home")}>Home</button> */}
         </li>
 
+     <li className="nav-item nav-link">
+          <NavLink
+            to="/shop"
+            style={({ isActive }) => ({
+              color: isActive ? "#ff9900" : "#ffffff",
+            })}
+          >
+            Shop
+          </NavLink>
+       
+        </li>
         {/* <li className="nav-item nav-link">
           <NavLink
             to="/user/dashboard"

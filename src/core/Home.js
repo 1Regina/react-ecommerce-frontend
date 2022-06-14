@@ -34,7 +34,11 @@ const Home = () => {
   }, []);
 
   return (
-    <Layout title="Home Page" description="Node React E-commerce App" className="container-fluid">
+    <Layout
+      title="Home Page"
+      description="Node React E-commerce App"
+      className="container-fluid"
+    >
       {/* {JSON.stringify(productsByArrival)}
       <hr/>
       {JSON.stringify(productsBySell)} */}
