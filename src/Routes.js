@@ -15,6 +15,7 @@ import AddProduct from "./admin/AddProduct";
 import NotFound from "./views/NotFound";
 import Forbidden from "./views/Forbidden";
 import Shop from "./core/Shop";
+import Product from "./core/Product";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -59,6 +60,7 @@ const Routes6 = () => {
             </AdminRoute>
           }
         />
+        <Route path="/product/:productId" element={<Product />} />
         <Route path="/forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
