@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Link to avoid reloading the page. withRouter to access route history. wtihRouter has deprecated in v6. replace by useNavigate
 import { signout, isAuthenticated } from "../auth/";
+import { itemTotal } from "./cartHelpers";
 
 const Menu = () => {
   let navigate = useNavigate();
@@ -19,7 +20,7 @@ const Menu = () => {
           {/* <button onClick={() => navigate("/home")}>Home</button> */}
         </li>
 
-     <li className="nav-item nav-link">
+        <li className="nav-item nav-link">
           <NavLink
             to="/shop"
             style={({ isActive }) => ({
@@ -28,8 +29,19 @@ const Menu = () => {
           >
             Shop
           </NavLink>
-       
         </li>
+
+        <li className="nav-item nav-link">
+          <NavLink
+            to="/cart"
+            style={({ isActive }) => ({
+              color: isActive ? "#ff9900" : "#ffffff",
+            })}
+          >
+            Cart <sup> <small className="cart-badge">{itemTotal()}</small></sup>
+          </NavLink>
+        </li>
+
         {/* <li className="nav-item nav-link">
           <NavLink
             to="/user/dashboard"
