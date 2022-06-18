@@ -3,9 +3,7 @@ import { createSearchParams } from "react-router-dom";
 export const addItem = (item, next) => {
   let cart = [];
   if (typeof window !== "undefined") {
-    console.log(`aaaaa`);
     if (localStorage.getItem("cart")) {
-      console.log(`bbb`);
       cart = JSON.parse(localStorage.getItem("cart"));
       console.log(`cart`, cart);
     }
