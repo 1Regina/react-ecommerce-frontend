@@ -13,6 +13,7 @@ import DropIn from "braintree-web-drop-in-react";
 
 const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
   const [data, setData] = useState({
+    loading: false,
     success: false,
     clientToken: null,
     error: "",
@@ -41,6 +42,10 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     getToken(userId, token);
   }, []);
 
+  const handleAddress = (event) => {
+    setData({ ...data, address: event.target.value });
+  };
+
   const getTotal = () => {
     return products.reduce((currentValue, nextValue) => {
       return currentValue + nextValue.count * nextValue.price;
@@ -52,16 +57,20 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
       <div>{showDropIn()}</div>
     ) : (
       <Link to="/signin">
-        <button className="btn btn-primary">Sign in to checkout</button>{" "}
+        <button className="btn btn-primary">Sign in to checkout</button>
       </Link>
     );
   };
 
+  let deliveryAddress = data.address;
+
   const buy = () => {
+    setData({ loading: true });
     // send the nonce to your server
     // nonce = data.instance.requestPaymentMethod()
     let nonce;
-    // console.log(`aaaa.`, data.instance)
+    console.log("This is data: ", data);
+    console.log(`data.instance: `, data.instance);
     if (!data?.instance?.requestPaymentMethod) return console.log("buy error");
     let getNonce = data.instance
       .requestPaymentMethod()
@@ -82,20 +91,36 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
         processPayment(userId, token, paymentData)
           .then((response) => {
             console.log(response);
-            // setData ({...response, success:response.success })
-            // empty cart
-            emptyCart(() => {
-              setRun(!run); // update parent state
-              console.log("payment success and empty cart");
-              setData({
-                loading: false,
-                success: true,
-              });
-            });
-            // })
             // create order
+            const createOrderData = {
+              products: products,
+              transaction_id: response.transaction.id,
+              amount: response.transaction.amount,
+              address: deliveryAddress, // cannot use data.address as data is not available within here so create a state to refer to it for use
+            };
+
+            createOrder(userId, token, createOrderData)
+              .then((response) => {
+                // setData({ ...response, success: response.success });
+                // empty cart
+                emptyCart(() => {
+                  setRun(!run); // update parent state
+                  console.log("payment success and empty cart");
+                  setData({
+                    loading: false,
+                    success: true,
+                  });
+                });
+              })
+              .catch((error) => {
+                console.log(error);
+                setData({ loading: false });
+              });
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            console.log(error);
+            setData({ loading: false });
+          });
       })
       .catch((error) => {
         // console.log(`dropin error: `, error);
@@ -108,6 +133,15 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     <div onBlur={() => setData({ ...data, error: "" })}>
       {data.clientToken !== null && products.length > 0 ? (
         <div>
+          <div className="gorm-group mb-3">
+            <label className="text-muted"> Delivery address: </label>
+            <textarea
+              onChange={handleAddress}
+              className="form-control"
+              value={data.address}
+              placeholder="Type your delivery address here..."
+            />
+          </div>
           <DropIn
             options={{
               authorization: data.clientToken,
@@ -144,11 +178,15 @@ const Checkout = ({ products, setRun = (f) => f, run = undefined }) => {
     </div>
   );
 
+  const showLoading = (loading) =>
+    loading && <h2 className="text-danger">Loading...</h2>;
+
   return (
     <div>
       {/* {JSON.stringify(products)} */}
       <h2>Total: ${getTotal()}</h2>
       {showSuccess(data.success)}
+      {showLoading(data.loading)}
       {showError(data.error)}
       {showCheckout()}
     </div>

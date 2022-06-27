@@ -12,8 +12,8 @@ const Cart = () => {
   // useEffect(() => {
   //   setItems(getCart());
   // }, [items]);// [items] bcos localStorage cart will refresh/less everytime we change/remove item so we want useEffect to kick in every time items change so that setItems(getCart()) will then run to give the updated Cart
-useEffect(() => {
-  console.log('MAX DEPTH ...');
+  useEffect(() => {
+    console.log("MAX DEPTH ...");
     setItems(getCart());
   }, [run]);
 
@@ -23,24 +23,25 @@ useEffect(() => {
         <h2>Your cart has {`${items.length}`} items.</h2>
         <hr />
         {items.map((product, i) => (
-          <Card 
-              key={i} 
-              product={product} 
-              showAddToCartButton = {false} 
-              cartUpdate = {true} // so this only show in the cart page and nowhere else
-              showRemoveProductButton = {true} 
-              setRun={setRun}
+          <Card
+            key={i}
+            product={product}
+            showAddToCartButton={false}
+            cartUpdate={true} // so this only show in the cart page and nowhere else
+            showRemoveProductButton={true}
+            setRun={setRun}
             run={run}
-              />
+          />
         ))}
       </div>
     );
   };
   // case of no items in local storage
   const noItemsMessage = () => {
+    return(
     <h2>
       Your cart is empty. <br /> <Link to="/shop">Continue shopping</Link>
-    </h2>;
+    </h2>)
   };
   return (
     <Layout
@@ -53,12 +54,12 @@ useEffect(() => {
           {items.length > 0 ? showItems(items) : noItemsMessage()}
         </div>
         <div className="col-6">
-       <h2 className="mb-4">Your cart summary</h2>
-       <Checkout products={items}  setRun={setRun} run={run}  />
+          <h2 className="mb-4">Your cart summary</h2>
+          <Checkout products={items} setRun={setRun} run={run} />
         </div>
       </div>
     </Layout>
-  );
+  )
 };
 
 export default Cart;

@@ -17,6 +17,7 @@ import Forbidden from "./views/Forbidden";
 import Shop from "./core/Shop";
 import Product from "./core/Product";
 import Cart from "./core/Cart";
+import Orders from "./admin/Orders";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -63,6 +64,15 @@ const Routes6 = () => {
         />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart/>} />
+                <Route
+          path="/admin/orders"
+          element={
+            <AdminRoute>
+              <Orders />
+            </AdminRoute>
+          }
+        />
+
         <Route path="/forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
