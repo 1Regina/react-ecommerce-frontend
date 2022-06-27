@@ -66,36 +66,35 @@ const Dashboard = () => {
     );
   };
 
-const purchaseHistory = history => {
+  const purchaseHistory = (history) => {
     return (
-        <div className="card mb-5">
-            <h3 className="card-header">Purchase history</h3>
-            <ul className="list-group">
-                <li className="list-group-item">
-                    {history.map((hist, i) => {
-                        return (
-                            <div key={i}>
-                                <hr />
-                                {hist.products.map((prod, j) => {
-                                    return (
-                                        <div key={i+"-"+j}>
-                                            <h6>Product name: {prod.name}</h6>
-                                            <h6>Product price: ${prod.price}</h6>
-                                            <h6>
-                                                Purchased date:{" "}
-                                                {moment(prod.createdAt).fromNow()}
-                                            </h6>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
-                </li>
-            </ul>
-        </div>
+      <div className="card mb-5">
+        <h3 className="card-header">Purchase history</h3>
+        <ul className="list-group">
+          <li className="list-group-item">
+            {history.map((hist, i) => {
+              return (
+                <div key={i}>
+                  <hr />
+                  {hist.products.map((prod, j) => {
+                    return (
+                      <div key={i + "-" + j}>
+                        <h6>Product name: {prod.name}</h6>
+                        <h6>Product price: ${prod.price}</h6>
+                        <h6>
+                          Purchased date: {moment(prod.createdAt).fromNow()}
+                        </h6>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </li>
+        </ul>
+      </div>
     );
-};
+  };
 
   return (
     <Layout
