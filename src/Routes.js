@@ -18,6 +18,7 @@ import Shop from "./core/Shop";
 import Product from "./core/Product";
 import Cart from "./core/Cart";
 import Orders from "./admin/Orders";
+import Profile from "./user/Profile";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -63,13 +64,21 @@ const Routes6 = () => {
           }
         />
         <Route path="/product/:productId" element={<Product />} />
-        <Route path="/cart" element={<Cart/>} />
-                <Route
+        <Route path="/cart" element={<Cart />} />
+        <Route
           path="/admin/orders"
           element={
             <AdminRoute>
               <Orders />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/profile/:userId"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
           }
         />
 
