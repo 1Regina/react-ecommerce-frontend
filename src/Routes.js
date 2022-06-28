@@ -12,6 +12,7 @@ import Dashboard from "./user/UserDashboard";
 import AdminDashboard from "./user/AdminDashboard";
 import AddCategory from "./admin/AddCategory";
 import AddProduct from "./admin/AddProduct";
+import UpdateProduct from "./admin/UpdateProduct";
 import NotFound from "./views/NotFound";
 import Forbidden from "./views/Forbidden";
 import Shop from "./core/Shop";
@@ -19,6 +20,7 @@ import Product from "./core/Product";
 import Cart from "./core/Cart";
 import Orders from "./admin/Orders";
 import Profile from "./user/Profile";
+import ManageProducts from "./admin/ManageProducts";
 
 const Routes6 = () => {
   const history = createMemoryHistory();
@@ -63,8 +65,27 @@ const Routes6 = () => {
             </AdminRoute>
           }
         />
+
+        <Route
+          path="/admin/product/update/:productId"
+          element={
+            <AdminRoute>
+              <UpdateProduct />
+            </AdminRoute>
+          }
+        />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+
+        <Route
+          path="/admin/products"
+          element={
+            <AdminRoute>
+              <ManageProducts />
+            </AdminRoute>
+          }
+        />
+
         <Route
           path="/admin/orders"
           element={
